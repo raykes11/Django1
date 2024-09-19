@@ -31,10 +31,12 @@ class Infos(Mather):
     }
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        context['number_list'] = [f'Купи скайрим {a+1}' for a in range(100)]
+
         return context
     def get(self, request, *args, **kwargs):
         info = Info.objects.all()
-        # info = [f'Купи скайрим {a+1}' for a in range(100)]
         form = NumberPage()
         print(f"""
 
@@ -48,23 +50,25 @@ class Infos(Mather):
         paginator = Paginator(info, per_page)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        dict_ = {'page_obj': page_obj, 'per_page': per_page, 'form': form}
+        index = page_obj.paginator.page_range
+        number = {}
+        for i in range(len(index)):
+            number[f"{i+1}"] = self.get_context_data()['number_list'][i]
+        dict_ = {'page_obj': page_obj, 'per_page': self.extra_context['per_page'], 'form': form,"number":number}
         return render(request, self.template_name, self.get_context_data(**dict_))
 
     def post(self, request, *args, **kwargs):
         self.extra_context['per_page'] = request.POST.get('number')
         form = NumberPage()
-        print(f"""
-
-{self.extra_context['per_page']}
-
-
-""")
         info = Info.objects.all()
         paginator = Paginator(info, self.extra_context['per_page'])
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-        dict_ = {'page_obj': page_obj, 'per_page': self.extra_context['per_page'], 'form': form}
+        index = page_obj.paginator.page_range
+        number = {}
+        for i in range(len(index)):
+            number[f"{i+1}"] = self.get_context_data()['number_list'][i]
+        dict_ = {'page_obj': page_obj, 'per_page': self.extra_context['per_page'], 'form': form,"number":number}
         return render(request, self.template_name, self.get_context_data(**dict_))
 
 

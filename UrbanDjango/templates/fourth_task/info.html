@@ -8,12 +8,8 @@
         {% endif %}
 
         <span class="current">
-                {% for i in page_obj.paginator.page_range %}
-                    {% if page_obj.number == i %}
-                        <a href="?page=#">{{i}}</a>
-                    {% else %}
-                        <a href="?page={{i}}">{{i}}</a>
-                    {% endif %}
+                {% for  key , value  in number.items %}
+                        <a href="?page={{key}}">{{value}}</a>
                 {% endfor %}
         </span>
 
