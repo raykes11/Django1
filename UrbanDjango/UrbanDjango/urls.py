@@ -16,7 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from task1.views import Title, NotLive, Live, Menu,sign_up_by_html,sign_up_by_django
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('',strat_page),
+
+    # path('1/',Next_page.as_view()),
+    path('title/',Title.as_view()),
+    path('title/live/',Live.as_view()),
+    path('title/not_live/',NotLive.as_view()),
+    path('',sign_up_by_html),
+    path('django_sign_up/',sign_up_by_django),
+
 ]

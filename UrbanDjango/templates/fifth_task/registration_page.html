@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <title>Title</title>
+</head>
+<body>
+            <ul>
+                {% for name_error in info.error %}
+                    <li>{{name_error}}</li>
+                {% endfor %}
+            </ul>
+            {{Bayers}}
+    {% if info.number is 2 %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Отправить</button>
+        </form>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            <label for="login"> Введите логин</label>
+            <input type="text" id="login" name="login" minlength = "3" maxlength="30" required><br>
+
+            <label for="password"> Введите пароль</label>
+            <input type="password" id="password" name="password" minlength = "8" maxlength="32" required><br>
+
+            <label for="repeat_password"> Введите повторно пароль</label>
+            <input type="password" id="repeat_password" name="repeat_password" minlength = "8" maxlength="32" required><br>
+
+            <label for="age"> Введите возраст</label>
+            <input type="int" id="age" name="age" maxlength="3" required><br>
+            <button type="submit">Отправить</button>
+        </form>
+    {% endif %}
+
+</body>
+</html>

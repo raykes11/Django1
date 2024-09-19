@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Пирожек</title>
+</head>
+
+<body>
+    <header>
+        {% block header %}
+        <h1> Игра началась </h1>
+        <h2>Ахалай махалай</h2>
+        {% endblock %}
+    </header>
+    {% block menu %}
+    <ul>
+        {% for page_name in other %}
+            <li><a href = "{{page_name.extra_context.url}}">{{page_name.extra_context.name}}</a></li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+    {% block content  %}
+
+    {% endblock %}
+</body>
+</html>
