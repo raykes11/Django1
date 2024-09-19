@@ -26,23 +26,48 @@ class Infos(Mather):
         "title": "Информация",
         'text' : 'общий список',
         'url'  : '/title/info',
-        'name' : 'ИНФО'
+        'name' : 'ИНФО',
+        'per_page': None
     }
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-
     def get(self, request, *args, **kwargs):
         info = Info.objects.all()
+        # info = [f'Купи скайрим {a+1}' for a in range(100)]
         form = NumberPage()
-        per_page = 1
-        if request.method == "GET":
-            per_page = request.GET.get('number')
+        print(f"""
+
+{self.extra_context['per_page']}
+
+
+""")
+        per_page = self.extra_context['per_page']
+        if per_page is None or per_page ==0:
+            per_page = 1
         paginator = Paginator(info, per_page)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         dict_ = {'page_obj': page_obj, 'per_page': per_page, 'form': form}
         return render(request, self.template_name, self.get_context_data(**dict_))
+
+    def post(self, request, *args, **kwargs):
+        self.extra_context['per_page'] = request.POST.get('number')
+        form = NumberPage()
+        print(f"""
+
+{self.extra_context['per_page']}
+
+
+""")
+        info = Info.objects.all()
+        paginator = Paginator(info, self.extra_context['per_page'])
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        dict_ = {'page_obj': page_obj, 'per_page': self.extra_context['per_page'], 'form': form}
+        return render(request, self.template_name, self.get_context_data(**dict_))
+
+
 
 class Title(Mather):
     template_name = 'fourth_task/title.html'
