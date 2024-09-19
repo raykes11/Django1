@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block content  %}
-{{games}}
     <ul>
         {% for game in games %}
             <li>{{game.title}}| {{game.description}} | Стоимость: {{game.cost}}  <button>{{game.description}}</button></li>

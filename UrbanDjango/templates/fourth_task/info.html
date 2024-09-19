@@ -1,0 +1,37 @@
+{% extends "fourth_task/menu.html" %}
+{% block content  %}
+<div>
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+                {% for i in page_obj.paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <a href="?page=#">{{i}}</a>
+                    {% else %}
+                        <a href="?page={{i}}">{{i}}</a>
+                    {% endif %}
+                {% endfor %}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% for post in page_obj %}
+<h2>{{post.title}}</h2>
+<p>{{post.description}}</p>
+
+{% endfor %}
+
+<form method="put">
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
+
+</form>
+{% endblock %}
